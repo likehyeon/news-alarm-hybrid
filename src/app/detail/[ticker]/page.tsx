@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { ArrowLeft, ExternalLink, TrendingUp, ChevronLeft } from 'lucide-react';
+import { ChevronLeft, TrendingUp, ExternalLink, Info } from 'lucide-react';
 
 // --- Types ---
 interface NewsItem {
