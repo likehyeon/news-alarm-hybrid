@@ -1,13 +1,28 @@
-import { Metadata } from 'next';
-import { Search, Plus, Star, History, ChevronRight } from 'lucide-react';
-import Link from 'next/link';
+"use client";
 
-export const metadata: Metadata = {
-  title: "티커 추가",
-  description: "새로운 관심 기업을 추가하고 실시간 알림을 설정하세요",
-};
+import { Search, Plus, ChevronRight, Minus, List } from 'lucide-react';
+import Link from 'next/link';
+import { useState } from 'react';
+
+const initialTickers = [
+  { ticker: 'PLTR', name: '팔란티어' },
+  { ticker: 'HYMTF', name: '현대자동차' },
+  { ticker: 'NVDA', name: '엔비디아' },
+  { ticker: 'SATL', name: '세틀로직' },
+  { ticker: 'POET', name: '포엣' },
+  { ticker: 'AMKR', name: '앰코' },
+  { ticker: 'TSLA', name: '테슬라' },
+  { ticker: 'AAPL', name: '애플' },
+];
 
 export default function AddTickerPage() {
+  const [isEditing, setIsEditing] = useState(false);
+  const [tickers, setTickers] = useState(initialTickers);
+
+  const handleDelete = (tickerToDelete: string) => {
+    setTickers(prev => prev.filter(t => t.ticker !== tickerToDelete));
+  };
+
   return (
     <div className="min-h-screen bg-[var(--background)] pb-24">
       <header className="px-6 py-8 border-b border-[var(--border)] bg-[var(--surface)] sticky top-0 z-10 glass">
@@ -20,8 +35,9 @@ export default function AddTickerPage() {
       </header>
 
       <main className="container-px py-8 space-y-10">
+        {/* 검색 입력 */}
         <div className="relative animate-slide-up">
-            <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-[var(--secondary)]" size={20} strokeWidth={2.5} />
+            <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-[var(--secondary)] z-10" size={20} strokeWidth={2.5} />
             <input 
                 type="text" 
                 placeholder="기업명 또는 티커 검색 (예: NVDA)" 
@@ -29,42 +45,51 @@ export default function AddTickerPage() {
             />
         </div>
 
+        {/* 현재 추가한 티커 */}
         <section className="animate-slide-up" style={{ animationDelay: '0.1s' }}>
-            <h3 className="text-[11px] font-black text-[var(--secondary)] mb-5 flex items-center gap-2 uppercase tracking-widest px-1">
-                <Star size={16} strokeWidth={2.5} />
-                인기 티커
-            </h3>
-            <div className="flex flex-wrap gap-2.5">
-                {['TSLA', 'AAPL', 'MSFT', 'AMZN', 'GOOGL', 'META', 'NVDA', 'PLTR'].map(t => (
-                    <button key={t} className="px-6 py-3 bg-[var(--surface)] border border-[var(--border)] rounded-2xl text-[14px] font-black hover:border-[var(--primary)] hover:text-[var(--primary)] hover:bg-[var(--primary-dim)] transition-all active:scale-95 shadow-sm">
-                        ${t}
-                    </button>
-                ))}
+            <div className="flex items-center justify-between mb-5 px-1">
+              <h3 className="text-[11px] font-black text-[var(--secondary)] flex items-center gap-2 uppercase tracking-widest">
+                  <List size={16} strokeWidth={2.5} />
+                  현재 추가한 티커
+              </h3>
+              <button 
+                onClick={() => setIsEditing(!isEditing)}
+                className="text-[13px] font-bold text-[var(--primary)] hover:text-[var(--primary-hover)] transition-colors"
+              >
+                <span className="underline underline-offset-4 decoration-[var(--primary)]">
+                  {isEditing ? '완료' : '편집'}
+                </span>
+              </button>
             </div>
-        </section>
-
-        <section className="bg-[var(--surface)] rounded-[28px] overflow-hidden shadow-sm animate-slide-up" style={{ animationDelay: '0.2s' }}>
-            <h3 className="px-6 py-4 text-[11px] uppercase font-black text-[var(--secondary)] bg-[var(--secondary-dim)]/50 border-b border-[var(--border)] flex items-center gap-2 tracking-widest">
-                <History size={16} strokeWidth={2.5} />
-                최근 검색
-            </h3>
-            <div className="p-2 space-y-1">
-                {['PLTR', 'NVDA'].map((t, i) => (
-                    <div key={i} className="flex items-center justify-between p-4 hover:bg-[var(--secondary-dim)] rounded-2xl transition-all group">
-                        <div className="flex items-center gap-4">
-                            <div className="w-10 h-10 rounded-xl bg-[var(--background)] flex items-center justify-center font-black text-[11px] text-[var(--secondary)]">
-                                {t.slice(0, 2)}
-                            </div>
-                            <div>
-                                <p className="text-[15px] font-black">{t}</p>
-                                <p className="text-[11px] font-bold text-[var(--secondary)] uppercase tracking-tight">Tech Corporation Inc.</p>
-                            </div>
-                        </div>
-                        <button className="w-10 h-10 rounded-full bg-[var(--primary-dim)] text-[var(--primary)] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all active:scale-90">
-                            <Plus size={22} strokeWidth={3} />
-                        </button>
+            
+            <div className="space-y-0">
+              {tickers.length === 0 && (
+                <p className="text-center text-[var(--secondary)] text-sm font-bold py-8">
+                  추가된 티커가 없습니다.
+                </p>
+              )}
+              {tickers.map((t, i) => (
+                <div 
+                  key={t.ticker} 
+                  className="flex items-center justify-between py-4 border-b border-[var(--border)] last:border-b-0 transition-all group"
+                  style={{ animationDelay: `${i * 0.03}s` }}
+                >
+                  <div className="flex items-center gap-4">
+                    <div>
+                      <p className="text-[15px] font-black">{t.ticker}</p>
+                      <p className="text-[12px] font-bold text-[var(--secondary)]">{t.name}</p>
                     </div>
-                ))}
+                  </div>
+                  {isEditing && (
+                    <button 
+                      onClick={() => handleDelete(t.ticker)}
+                      className="w-8 h-8 rounded-full bg-[var(--danger)] text-white flex items-center justify-center transition-all active:scale-90 hover:bg-red-600 animate-fade-in"
+                    >
+                      <Minus size={16} strokeWidth={3} />
+                    </button>
+                  )}
+                </div>
+              ))}
             </div>
         </section>
       </main>
