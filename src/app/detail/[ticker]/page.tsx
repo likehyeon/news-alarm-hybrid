@@ -113,7 +113,7 @@ export default function DetailPage() {
         </section>
 
         {/* Chart Placeholder Section */}
-        <section className="bg-[var(--surface)] rounded-[24px] p-6 shadow-sm mb-4 min-h-[250px] flex items-center justify-center border border-[var(--border-light)]">
+        <section className="bg-[var(--surface)] rounded-[var(--radius-lg)] p-6 shadow-sm mb-4 min-h-[250px] flex items-center justify-center border border-[var(--border-light)]">
            <p className="text-[14px] font-bold text-[var(--secondary)]">차트 영역 (TradingView연동 예정)</p>
         </section>
 
@@ -133,7 +133,7 @@ export default function DetailPage() {
         {/* News Feed */}
         <section className="space-y-4 pt-2">
           {newsList.map((news) => (
-            <div key={news.id} className="bg-[var(--surface)] rounded-[24px] p-6 shadow-sm animate-slide-up border border-[var(--border-light)]">
+            <div key={news.id} className="bg-[var(--surface)] rounded-[var(--radius-lg)] p-6 shadow-sm animate-slide-up border border-[var(--border-light)]">
               <div className="flex justify-between items-center mb-4">
                 <div className="flex gap-0.5">
                     {[...Array(news.importance)].map((_, i) => (
@@ -145,7 +145,7 @@ export default function DetailPage() {
               
               <h3 className="text-[18px] font-black mb-4 leading-[1.4] text-[var(--foreground)]">{news.title}</h3>
               
-              <div className="bg-[var(--primary-dim)] p-4 rounded-[16px] mb-4">
+              <div className="bg-[var(--primary-dim)] p-4 rounded-[var(--radius-md)] mb-4">
                   <p className="text-[14px] font-bold text-[var(--foreground)] leading-snug">
                     {news.conclusion}
                   </p>

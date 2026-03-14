@@ -95,7 +95,7 @@ const StockWidget = ({
       <div className="flex items-center gap-4">
         {/* Mock Logo Icon */}
         <div className="relative">
-          <div className="w-12 h-12 rounded-[16px] bg-[var(--background)] flex items-center justify-center font-bold text-[var(--secondary)] text-sm shadow-sm overflow-hidden">
+          <div className="w-12 h-12 rounded-[var(--radius-md)] bg-[var(--background)] flex items-center justify-center font-bold text-[var(--secondary)] text-sm shadow-sm overflow-hidden">
             {ticker.slice(0, 2)}
           </div>
           {(newsBadge !== undefined && newsBadge > 0) && (
@@ -167,9 +167,9 @@ const MenuOverlay = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void
               key={i}
               href={item.href}
               onClick={onClose}
-              className="flex items-center gap-4 px-4 py-3.5 rounded-2xl hover:bg-[var(--background)] transition-all active:scale-[0.98] group"
+              className="flex items-center gap-4 px-4 py-3.5 rounded-[var(--radius-lg)] hover:bg-[var(--background)] transition-all active:scale-[0.98] group"
             >
-              <div className="w-10 h-10 rounded-[12px] bg-[var(--background)] flex items-center justify-center group-hover:bg-[var(--primary-dim)] group-hover:text-[var(--primary)] transition-colors">
+              <div className="w-10 h-10 rounded-[var(--radius-sm)] bg-[var(--background)] flex items-center justify-center group-hover:bg-[var(--primary-dim)] group-hover:text-[var(--primary)] transition-colors">
                 <item.icon size={20} strokeWidth={2} />
               </div>
               <span className="text-[16px] font-bold">{item.label}</span>
@@ -228,7 +228,7 @@ export default function AppHomeClient() {
       
       <main className="container-px pt-2">
         {/* Section One: Ticker List */}
-        <section className="bg-[var(--surface)] rounded-[24px] p-6 shadow-sm mb-4">
+        <section className="bg-[var(--surface)] rounded-[var(--radius-lg)] p-6 shadow-sm mb-4">
           <div className="flex items-center justify-between mb-2">
             <h2 className="text-[17px] font-bold">관심 종목</h2>
             <ChevronRight size={20} className="text-[var(--secondary)] opacity-50" />
@@ -246,9 +246,9 @@ export default function AppHomeClient() {
         </section>
 
         {/* Section Two: Example Secondary Card */}
-        <section className="bg-[var(--surface)] rounded-[24px] p-6 shadow-sm mb-4 flex items-center justify-between">
+        <section className="bg-[var(--surface)] rounded-[var(--radius-lg)] p-6 shadow-sm mb-4 flex items-center justify-between">
            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-[16px] bg-[var(--primary-dim)] flex items-center justify-center text-[var(--primary)]">
+              <div className="w-12 h-12 rounded-[var(--radius-md)] bg-[var(--primary-dim)] flex items-center justify-center text-[var(--primary)]">
                 <TrendingUp size={24} />
               </div>
               <div className="flex flex-col">

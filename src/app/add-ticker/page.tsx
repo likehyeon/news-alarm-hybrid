@@ -44,17 +44,17 @@ export default function AddTickerPage() {
 
       <main className="container-px pt-2">
         {/* Search Input */}
-        <div className="relative mb-8">
+        <div className="relative mb-6">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--secondary)]" size={18} />
             <input 
                 type="text" 
                 placeholder="기업명 또는 티커 검색" 
-                className="w-full bg-[var(--surface)] rounded-[16px] py-4 pl-11 pr-4 text-[15px] font-medium focus:outline-none shadow-sm"
+                className="w-full bg-[var(--surface)] rounded-[var(--radius-md)] py-4 pl-11 pr-4 text-[15px] font-medium focus:outline-none shadow-sm"
             />
         </div>
 
         {/* Added Tickers List */}
-        <section className="bg-[var(--surface)] rounded-[24px] p-6 shadow-sm">
+        <section className="bg-[var(--surface)] rounded-[var(--radius-lg)] p-6 shadow-sm">
             <div className="flex items-center gap-2 mb-4 text-[13px] font-bold text-[var(--secondary)] uppercase tracking-tight">
                 <List size={16} />
                 현재 추가한 티커
@@ -72,7 +72,7 @@ export default function AddTickerPage() {
                   className="flex items-center justify-between py-4 group"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-[12px] bg-[var(--background)] flex items-center justify-center font-bold text-[var(--secondary)] text-[12px]">
+                    <div className="w-10 h-10 rounded-[var(--radius-sm)] bg-[var(--background)] flex items-center justify-center font-bold text-[var(--secondary)] text-[12px]">
                         {t.ticker.slice(0, 2)}
                     </div>
                     <div>

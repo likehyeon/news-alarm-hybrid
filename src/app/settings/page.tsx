@@ -37,26 +37,26 @@ export default function SettingsPage() {
             <h1 className="text-xl font-black tracking-tight">설정</h1>
       </header>
 
-      <main className="container-px py-8 space-y-10">
-        <section className="bg-[var(--surface)] rounded-[24px] overflow-hidden shadow-sm animate-slide-up">
+      <main className="container-px py-4 space-y-8">
+        <section className="bg-[var(--surface)] rounded-[var(--radius-lg)] overflow-hidden shadow-sm animate-slide-up">
           <h2 className="px-6 py-5 text-[13px] font-bold text-[var(--secondary)] border-b border-[var(--border-light)]">알림 및 서비스</h2>
           <SettingsItem icon={<Bell size={20} strokeWidth={2.5} />} label="새 뉴스 알림" value="켜짐" />
           <SettingsItem icon={<Shield size={20} strokeWidth={2.5} />} label="중요 알림만 필터링" value="꺼짐" />
         </section>
 
-        <section className="bg-[var(--surface)] rounded-[24px] overflow-hidden shadow-sm animate-slide-up" style={{ animationDelay: '0.1s' }}>
+        <section className="bg-[var(--surface)] rounded-[var(--radius-lg)] overflow-hidden shadow-sm animate-slide-up" style={{ animationDelay: '0.1s' }}>
           <h2 className="px-6 py-5 text-[13px] font-bold text-[var(--secondary)] border-b border-[var(--border-light)]">앱 커스텀</h2>
           <SettingsItem icon={<Moon size={20} strokeWidth={2.5} />} label="다크 모드" value="시스템 설정" />
           <SettingsItem icon={<SettingsIcon size={20} strokeWidth={2.5} />} label="홈 화면 위젯 편집" />
         </section>
 
-        <section className="bg-[var(--surface)] rounded-[24px] overflow-hidden shadow-sm animate-slide-up" style={{ animationDelay: '0.2s' }}>
+        <section className="bg-[var(--surface)] rounded-[var(--radius-lg)] overflow-hidden shadow-sm animate-slide-up" style={{ animationDelay: '0.2s' }}>
           <h2 className="px-6 py-5 text-[13px] font-bold text-[var(--secondary)] border-b border-[var(--border-light)]">정보</h2>
           <SettingsItem icon={<Info size={20} strokeWidth={2.5} />} label="버전 정보" value="v1.0.0" hasArrow={false} />
           <SettingsItem icon={<Shield size={20} strokeWidth={2.5} />} label="개인정보 처리방침" />
         </section>
 
-        <button className="w-full py-5 text-center text-[15px] font-black text-[var(--danger)] hover:bg-[var(--danger)]/5 rounded-[24px] transition-all active:scale-95 flex items-center justify-center gap-2 mt-4">
+        <button className="w-full py-5 text-center text-[15px] font-black text-[var(--danger)] hover:bg-[var(--danger)]/5 rounded-[var(--radius-lg)] transition-all active:scale-95 flex items-center justify-center gap-2 mt-4">
             <LogOut size={18} strokeWidth={3} />
             로그아웃
         </button>

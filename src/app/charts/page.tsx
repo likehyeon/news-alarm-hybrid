@@ -19,14 +19,14 @@ export default function ChartsPage() {
 
       <main className="container-px py-8 space-y-6">
         <div className="surface p-8 flex flex-col items-center justify-center min-h-[400px] border border-[var(--border-light)] animate-slide-up bg-[var(--surface)]">
-            <div className="w-16 h-16 rounded-[20px] bg-[var(--primary-dim)] flex items-center justify-center mb-6">
+            <div className="w-16 h-16 rounded-[var(--radius-md)] bg-[var(--primary-dim)] flex items-center justify-center mb-6">
                 <BarChart3 className="text-[var(--primary)]" size={32} strokeWidth={2.5} />
             </div>
             <p className="text-[15px] font-bold text-[var(--foreground-dim)] text-center leading-relaxed">
                 TradingView 차트가 연동될 예정입니다.<br/>
                 실시간 데이터 스트리밍을 준비 중입니다.
             </p>
-            <button className="mt-8 px-8 py-3 bg-[var(--primary)] text-white rounded-[20px] text-[15px] font-bold hover:bg-[var(--primary-hover)] transition-all active:scale-95 shadow-sm">
+            <button className="mt-8 px-8 py-3 bg-[var(--primary)] text-white rounded-[var(--radius-md)] text-[15px] font-bold hover:bg-[var(--primary-hover)] transition-all active:scale-95 shadow-sm">
                 데이터 수동 동기화
             </button>
         </div>
