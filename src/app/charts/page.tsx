@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { TrendingUp, BarChart3, Activity, Download, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
+import BottomNav from '../components/BottomNav';
 
 export const metadata: Metadata = {
   title: "실시간 차트",
@@ -10,25 +11,22 @@ export const metadata: Metadata = {
 export default function ChartsPage() {
   return (
     <div className="min-h-screen bg-[var(--background)] pb-24">
-      <header className="px-6 py-8 border-b border-[var(--border)] bg-[var(--surface)] sticky top-0 z-10 glass">
-        <div className="flex items-center gap-3 container-px w-full">
-            <Link href="/" className="p-2 -ml-2 hover:bg-[var(--background)] rounded-full transition-all active:scale-90 bg-[var(--background)]">
-                <ChevronRight className="rotate-180" size={24} strokeWidth={3} />
-            </Link>
-            <h1 className="text-2xl font-black tracking-tighter">실시간 차트</h1>
+      <header className="px-6 py-6 bg-[var(--background)] sticky top-0 z-10">
+        <div className="container-px w-full text-center">
+            <h1 className="text-xl font-black tracking-tight">실시간 차트</h1>
         </div>
       </header>
 
       <main className="container-px py-8 space-y-6">
-        <div className="surface p-8 flex flex-col items-center justify-center min-h-[400px] border-dashed border-2 animate-slide-up border-[var(--border)] bg-[var(--surface)]">
-            <div className="w-20 h-20 rounded-3xl bg-[var(--primary-dim)] flex items-center justify-center mb-6">
-                <BarChart3 className="text-[var(--primary)]" size={40} strokeWidth={2.5} />
+        <div className="surface p-8 flex flex-col items-center justify-center min-h-[400px] border border-[var(--border-light)] animate-slide-up bg-[var(--surface)]">
+            <div className="w-16 h-16 rounded-[20px] bg-[var(--primary-dim)] flex items-center justify-center mb-6">
+                <BarChart3 className="text-[var(--primary)]" size={32} strokeWidth={2.5} />
             </div>
-            <p className="text-[15px] font-bold text-[var(--secondary)] text-center leading-relaxed">
+            <p className="text-[15px] font-bold text-[var(--foreground-dim)] text-center leading-relaxed">
                 TradingView 차트가 연동될 예정입니다.<br/>
                 실시간 데이터 스트리밍을 준비 중입니다.
             </p>
-            <button className="mt-8 px-8 py-3 bg-[var(--primary)] text-white rounded-full text-sm font-black shadow-lg shadow-blue-500/20 hover:bg-[var(--primary-hover)] transition-all active:scale-95">
+            <button className="mt-8 px-8 py-3 bg-[var(--primary)] text-white rounded-[20px] text-[15px] font-bold hover:bg-[var(--primary-hover)] transition-all active:scale-95 shadow-sm">
                 데이터 수동 동기화
             </button>
         </div>
@@ -50,6 +48,7 @@ export default function ChartsPage() {
             </div>
         </section>
       </main>
+      <BottomNav />
     </div>
   );
 }

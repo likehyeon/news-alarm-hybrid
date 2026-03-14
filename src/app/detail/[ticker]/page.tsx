@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { ChevronLeft, TrendingUp, ExternalLink, Info } from 'lucide-react';
+import { ChevronLeft, TrendingUp, ExternalLink, Info, ChevronRight } from 'lucide-react';
 
 // --- Types ---
 interface NewsItem {
@@ -72,145 +72,108 @@ const MOCK_NEWS: Record<string, NewsItem[]> = {
   ]
 };
 
+import BottomNav from '../../components/BottomNav';
+
+// ... (previous Types and Mock Data remain same)
+
 export default function DetailPage() {
   const params = useParams();
   const currentTicker = params.ticker as string || 'HYMTF';
   const [selectedFilter, setSelectedFilter] = useState('최신순');
   
   const newsList = MOCK_NEWS[currentTicker] || [];
+  const stockName = TICKERS.find(t => t.id === currentTicker)?.name || currentTicker;
 
   return (
-    <div className="flex h-screen bg-[var(--background)] overflow-hidden">
-      {/* --- Sidebar (Ticker List) --- */}
-      <aside className="w-18 md:w-24 border-r border-[var(--border)] bg-[var(--surface)] flex flex-col items-center py-8 gap-6 z-20 shadow-sm">
-        <Link href="/" className="mb-6 p-2.5 rounded-full hover:bg-[var(--background)] transition-all active:scale-90 bg-[var(--background)]">
-            <ChevronLeft size={24} strokeWidth={3} />
-        </Link>
-        <div className="flex flex-col gap-5">
-          {TICKERS.map((t) => (
-            <Link 
-              key={t.id} 
-              href={`/detail/${t.id}`}
-              className={`flex flex-col items-center gap-1 group transition-all ${currentTicker === t.id ? 'opacity-100 scale-110' : 'opacity-30 hover:opacity-100 hover:scale-105'}`}
+    <div className="min-h-screen bg-[var(--background)] pb-32">
+      {/* Header */}
+      <header className="px-6 py-6 bg-[var(--background)] sticky top-0 z-10">
+        <div className="container-px flex items-center justify-between">
+          <Link href="/" className="text-[var(--foreground)]">
+            <ChevronLeft size={24} strokeWidth={2.5} />
+          </Link>
+          <div className="flex flex-col items-center">
+            <h1 className="text-[17px] font-bold">{stockName}</h1>
+            <span className="text-[12px] text-[var(--secondary)] font-medium uppercase tracking-tight">{currentTicker}</span>
+          </div>
+          <div className="w-6" /> {/* Spacer */}
+        </div>
+      </header>
+
+      <main className="container-px pt-2">
+        {/* Price Section */}
+        <section className="flex flex-col items-center py-6">
+          <div className="flex items-center gap-2 text-[var(--danger)]">
+            <h2 className="text-[32px] font-black tracking-tight">243,500</h2>
+            <TrendingUp size={28} strokeWidth={3} />
+          </div>
+          <div className="flex items-center gap-1.5 mt-1">
+            <span className="text-[15px] font-bold text-[var(--danger)]">+2,500원 (+1.04%)</span>
+          </div>
+        </section>
+
+        {/* Chart Placeholder Section */}
+        <section className="bg-[var(--surface)] rounded-[24px] p-6 shadow-sm mb-4 min-h-[250px] flex items-center justify-center border border-[var(--border-light)]">
+           <p className="text-[14px] font-bold text-[var(--secondary)]">차트 영역 (TradingView연동 예정)</p>
+        </section>
+
+        {/* Filter Section */}
+        <div className="flex gap-2 py-4 overflow-x-auto no-scrollbar">
+          {['최신순', '중요도순', '공시', '뉴스'].map((filter) => (
+            <button
+              key={filter}
+              onClick={() => setSelectedFilter(filter)}
+              className={`px-5 py-2 rounded-full text-[14px] font-bold whitespace-nowrap transition-all ${selectedFilter === filter ? 'bg-[var(--foreground)] text-white' : 'bg-[var(--surface)] text-[var(--secondary)] shadow-sm'}`}
             >
-              <div className={`w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center font-bold text-[13px] shadow-sm border-2 transition-all ${currentTicker === t.id ? 'bg-[var(--primary)] border-[var(--primary)] text-white shadow-blue-500/20' : 'bg-[var(--background)] border-[var(--border)]'}`}>
-                {t.id.slice(0, 2)}
-              </div>
-            </Link>
+              {filter}
+            </button>
           ))}
         </div>
-      </aside>
-
-      {/* --- Main Content --- */}
-      <main className="flex-1 flex flex-col overflow-hidden bg-[var(--background)]">
-        {/* Header */}
-        <header className="px-8 py-8 border-b border-[var(--border)] bg-[var(--surface)] shadow-sm">
-          <div className="flex items-end justify-between max-w-4xl mx-auto w-full">
-            <div className="flex items-baseline gap-4">
-              <h1 className="text-4xl font-black tracking-tighter">{currentTicker}</h1>
-              <button className="text-xs font-bold text-[var(--secondary)] underline decoration-[var(--border)] underline-offset-8 hover:text-[var(--primary)] hover:decoration-[var(--primary)] transition-all">
-                기업상세
-              </button>
-            </div>
-            <div className="flex flex-col items-end">
-                <div className="flex items-center gap-2 text-[var(--danger)] font-black">
-                    <TrendingUp size={24} strokeWidth={3} />
-                    <span className="text-2xl tracking-tight">243,500</span>
-                </div>
-                <span className="text-sm font-bold text-[var(--danger)] bg-[var(--danger)]/10 px-2 py-0.5 rounded-md mt-1">+1.04%</span>
-            </div>
-          </div>
-
-          <div className="flex gap-2.5 mt-10 max-w-4xl mx-auto w-full">
-            {['최신순', '중요도순', '관련 정보'].map((filter) => (
-              <button
-                key={filter}
-                onClick={() => setSelectedFilter(filter)}
-                className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all active:scale-95 ${selectedFilter === filter ? 'bg-[var(--foreground)] text-[var(--background)] shadow-md' : 'bg-[var(--background)] text-[var(--secondary)] border border-[var(--border)] hover:bg-[var(--border)]'}`}
-              >
-                {filter}
-              </button>
-            ))}
-          </div>
-        </header>
 
         {/* News Feed */}
-        <div className="flex-1 overflow-y-auto p-8 space-y-8">
-          <div className="max-w-4xl mx-auto space-y-8">
-            {newsList.map((news) => (
-              <div key={news.id} className="surface p-8 animate-slide-up hover:shadow-lg transition-all border-none">
-                <div className="flex justify-between items-start mb-6">
-                  <div className="flex gap-1 bg-[var(--warning)]/10 px-3 py-1.5 rounded-full">
-                      {[...Array(news.importance)].map((_, i) => (
-                          <span key={i} className="text-[var(--warning)] text-xs tracking-tighter leading-none">⚡</span>
-                      ))}
-                  </div>
-                  <span className="text-xs text-[var(--secondary)] font-bold uppercase tracking-widest">{news.time}</span>
+        <section className="space-y-4 pt-2">
+          {newsList.map((news) => (
+            <div key={news.id} className="bg-[var(--surface)] rounded-[24px] p-6 shadow-sm animate-slide-up border border-[var(--border-light)]">
+              <div className="flex justify-between items-center mb-4">
+                <div className="flex gap-0.5">
+                    {[...Array(news.importance)].map((_, i) => (
+                        <span key={i} className="text-[var(--warning)] text-[10px]">⚡</span>
+                    ))}
                 </div>
-                
-                <h2 className="text-2xl font-black mb-6 leading-[1.3] text-[var(--foreground)]">{news.title}</h2>
-                
-                <div className="space-y-6">
-                  <div className="bg-[var(--primary-dim)] p-5 rounded-2xl border-l-[6px] border-[var(--primary)]">
-                      <p className="text-[15px] font-bold text-[var(--foreground)] leading-relaxed">
-                          <span className="text-[var(--primary)] mr-2 font-black">요약</span>
-                          {news.conclusion}
-                      </p>
-                  </div>
-
-                  <div className="space-y-3 px-1">
-                      {news.summary.map((point, i) => (
-                          <div key={i} className="flex gap-3">
-                              <div className="w-1.5 h-1.5 rounded-full bg-[var(--border)] mt-2.5 shrink-0" />
-                              <p className="text-[15px] text-[var(--foreground-dim)] font-medium leading-relaxed">
-                                  {point}
-                              </p>
-                          </div>
-                      ))}
-                  </div>
-
-                  <div className="pt-8 border-t border-[var(--border)] mt-8">
-                      <div className="flex items-center gap-2 mb-4">
-                        <div className="w-2 h-5 bg-[var(--primary)] rounded-full" />
-                        <h4 className="text-sm font-black text-[var(--primary)] uppercase tracking-wider">
-                            {news.impactTitle}
-                        </h4>
-                      </div>
-                      <ul className="space-y-3">
-                          {news.impacts.map((impact, i) => (
-                              <li key={i} className="text-sm text-[var(--secondary)] leading-relaxed flex gap-3 italic font-medium">
-                                  <span className="text-[var(--border)]">—</span>
-                                  {impact}
-                              </li>
-                          ))}
-                      </ul>
-                  </div>
-
-                  <div className="pt-6 border-t border-[var(--border)] flex justify-end">
-                    <Link 
-                        href={news.url} 
-                        target="_blank"
-                        className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-[var(--background)] text-sm font-bold text-[var(--primary)] hover:bg-[var(--primary-dim)] transition-all group border border-[var(--border)]"
-                    >
-                        <ExternalLink size={16} strokeWidth={2.5} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                        원문 기사 전문 보기
-                    </Link>
-                  </div>
-                </div>
+                <span className="text-[12px] text-[var(--secondary)] font-bold">{news.time}</span>
               </div>
-            ))}
-
-            {newsList.length === 0 && (
-              <div className="flex flex-col items-center justify-center py-32 text-[var(--secondary)] space-y-4">
-                  <div className="w-16 h-16 rounded-full bg-[var(--border)] flex items-center justify-center opacity-50">
-                      <Info size={32} />
-                  </div>
-                  <p className="text-sm font-bold tracking-tight uppercase">현재 표시할 뉴스가 없습니다.</p>
+              
+              <h3 className="text-[18px] font-black mb-4 leading-[1.4] text-[var(--foreground)]">{news.title}</h3>
+              
+              <div className="bg-[var(--primary-dim)] p-4 rounded-[16px] mb-4">
+                  <p className="text-[14px] font-bold text-[var(--foreground)] leading-snug">
+                    {news.conclusion}
+                  </p>
               </div>
-            )}
-          </div>
-        </div>
+
+              <div className="flex justify-between items-center pt-2">
+                <span className="text-[13px] font-bold text-[var(--primary)] uppercase tracking-wider">Impact Analysis</span>
+                <Link 
+                    href={news.url} 
+                    target="_blank"
+                    className="flex items-center gap-1 text-[13px] font-bold text-[var(--secondary)]"
+                >
+                    더보기 <ChevronRight size={14} />
+                </Link>
+              </div>
+            </div>
+          ))}
+
+          {newsList.length === 0 && (
+            <div className="flex flex-col items-center justify-center py-20 text-[var(--secondary)] space-y-4">
+                <Info size={24} />
+                <p className="text-[14px] font-bold">뉴스 정보가 없습니다.</p>
+            </div>
+          )}
+        </section>
       </main>
+      
+      <BottomNav />
     </div>
   );
 }

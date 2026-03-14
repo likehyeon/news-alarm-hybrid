@@ -12,21 +12,22 @@
   --primary-dim: #e8f3ff;
   --secondary: #8b95a1;
   --secondary-dim: #f9fafb;
-  --border: #eaebef;
+  --border: #f2f3f5;
+  --border-light: #eff0f2;
   --danger: #f04452;
   --warning: #ffad13;
   --success: #00d084;
   
   --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
+  --radius-md: 20px;
+  --radius-lg: 24px;
   
-  /* Toss Style Shadows - More subtle and layered */
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 10px 20px rgba(0, 0, 0, 0.04), 0 2px 6px rgba(0, 0, 0, 0.04);
-  --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.06), 0 4px 12px rgba(0, 0, 0, 0.04);
+  /* Toss Style Shadows - Subtle and clean */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.02);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.06);
   
-  --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -67,7 +68,6 @@ body {
 /* Premium Surface Utilities */
 .surface {
   background-color: var(--surface);
-  border: 1px solid var(--border);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
   transition: var(--transition-smooth);
@@ -76,26 +76,12 @@ body {
 .toss-card {
   background-color: var(--surface);
   border-radius: var(--radius-md);
-  padding: 24px;
   box-shadow: var(--shadow-sm);
   transition: var(--transition-smooth);
 }
 
 .toss-card:active {
-  transform: scale(0.97);
-  background-color: var(--border);
-}
-
-.interactive:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-}
-
-.glass {
-  background: rgba(var(--surface), 0.8);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
+  transform: scale(0.98);
 }
 
 /* Micro-animations */
