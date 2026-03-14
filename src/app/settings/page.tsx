@@ -16,7 +16,7 @@ interface SettingsItemProps {
 }
 
 const SettingsItem = ({ icon, label, value, hasArrow = true }: SettingsItemProps) => (
-  <button className="w-full flex items-center justify-between p-5 active:bg-[var(--background)] transition-all border-b border-[var(--border-light)] last:border-0">
+  <button className="w-full flex items-center justify-between px-6 py-4.5 active:bg-[var(--background)] transition-all border-b border-[var(--border-light)] last:border-0">
     <div className="flex items-center gap-4">
       <div className="w-10 h-10 rounded-[12px] bg-[var(--background)] flex items-center justify-center text-[var(--foreground)] group-active:scale-95 transition-transform">
         {icon}
@@ -37,7 +37,7 @@ export default function SettingsPage() {
             <h1 className="text-xl font-black tracking-tight">설정</h1>
       </header>
 
-      <main className="container-px py-4 space-y-8">
+      <main className="container-px pt-6 pb-12 space-y-8">
         <section className="bg-[var(--surface)] rounded-[var(--radius-lg)] overflow-hidden shadow-sm animate-slide-up">
           <h2 className="px-6 py-5 text-[13px] font-bold text-[var(--secondary)] border-b border-[var(--border-light)]">알림 및 서비스</h2>
           <SettingsItem icon={<Bell size={20} strokeWidth={2.5} />} label="새 뉴스 알림" value="켜짐" />

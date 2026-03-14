@@ -90,7 +90,7 @@ const StockWidget = ({
   return (
     <Link 
       href={`/detail/${ticker}`} 
-      className="flex items-center justify-between py-4 active:bg-[var(--secondary-dim)] transition-colors px-1 group"
+      className="flex items-center justify-between py-4.5 active:bg-[var(--secondary-dim)] transition-colors px-1 group"
     >
       <div className="flex items-center gap-4">
         {/* Mock Logo Icon */}
