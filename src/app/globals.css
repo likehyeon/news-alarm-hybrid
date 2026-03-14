@@ -1,42 +1,49 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import "tailwindcss";
 
 :root {
   /* Toss-style Premium Color Palette - Light */
   --background: #f2f4f6;
   --foreground: #191f28;
+  --foreground-dim: #4e5968;
   --surface: #ffffff;
   --primary: #3182f6; /* Toss Blue */
   --primary-hover: #1b64da;
+  --primary-dim: #e8f3ff;
   --secondary: #8b95a1;
-  --border: #e5e8eb;
+  --secondary-dim: #f9fafb;
+  --border: #eaebef;
   --danger: #f04452;
   --warning: #ffad13;
   --success: #00d084;
   
   --radius-sm: 12px;
-  --radius-md: 20px;
-  --radius-lg: 32px;
+  --radius-md: 22px;
+  --radius-lg: 36px;
   
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.12);
+  /* Toss Style Shadows - More subtle and layered */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 10px 20px rgba(0, 0, 0, 0.04), 0 2px 6px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.06), 0 4px 12px rgba(0, 0, 0, 0.04);
   
-  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #101012;
     --foreground: #f9fafb;
+    --foreground-dim: #9ca3af;
     --surface: #1c1c1e;
     --primary: #3182f6;
     --primary-hover: #5296f7;
-    --secondary: #9ca3af;
+    --primary-dim: rgba(49, 130, 246, 0.15);
+    --secondary: #6b7280;
+    --secondary-dim: #2c2c2e;
     --border: #2c2c2e;
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
-    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.3);
-    --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.4);
   }
 }
 
@@ -46,17 +53,18 @@
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.02em; /* Toss Style: Slightly tighter tracking */
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  line-height: 1.5;
+  line-height: 1.6;
   overflow-x: hidden;
 }
 
-/* Premium Glassmorphism & Surface Utilities */
+/* Premium Surface Utilities */
 .surface {
   background-color: var(--surface);
   border: 1px solid var(--border);
@@ -65,40 +73,68 @@ body {
   transition: var(--transition-smooth);
 }
 
-.surface:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
+.toss-card {
+  background-color: var(--surface);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-smooth);
+}
+
+.toss-card:active {
+  transform: scale(0.97);
+  background-color: var(--border);
+}
+
+.interactive:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
 }
 
 .glass {
-  background: rgba(var(--surface), 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(var(--surface), 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
 }
 
 /* Micro-animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes pulse-soft {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+  0% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.8; }
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.5s ease-out forwards;
+.animate-slide-up {
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .badge-pulse {
   animation: pulse-soft 2s infinite ease-in-out;
 }
 
-/* Navigation & Layout Helpers */
+/* Layout Helpers */
 .container-px {
   padding-left: 20px;
   padding-right: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+h1, h2, h3, h4 {
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.text-dim {
+  color: var(--foreground-dim);
+}
+
+.bg-dim {
+  background-color: var(--secondary-dim);
 }

@@ -82,47 +82,51 @@ export default function DetailPage() {
   return (
     <div className="flex h-screen bg-[var(--background)] overflow-hidden">
       {/* --- Sidebar (Ticker List) --- */}
-      <aside className="w-16 md:w-20 border-r border-[var(--border)] bg-[var(--surface)] flex flex-col items-center py-6 gap-6 z-20">
-        <Link href="/" className="mb-4 p-2 rounded-full hover:bg-[var(--background)] transition-colors">
-            <ChevronLeft size={24} />
+      <aside className="w-18 md:w-24 border-r border-[var(--border)] bg-[var(--surface)] flex flex-col items-center py-8 gap-6 z-20 shadow-sm">
+        <Link href="/" className="mb-6 p-2.5 rounded-full hover:bg-[var(--background)] transition-all active:scale-90 bg-[var(--background)]">
+            <ChevronLeft size={24} strokeWidth={3} />
         </Link>
-        {TICKERS.map((t) => (
-          <Link 
-            key={t.id} 
-            href={`/detail/${t.id}`}
-            className={`flex flex-col items-center gap-1 group transition-all ${currentTicker === t.id ? 'opacity-100 scale-110' : 'opacity-40 hover:opacity-100'}`}
-          >
-            <div className={`w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center font-bold text-xs shadow-sm border-2 ${currentTicker === t.id ? 'bg-[var(--primary)] border-[var(--primary)] text-white' : 'bg-[var(--background)] border-[var(--border)]'}`}>
-              {t.id.slice(0, 2)}
-            </div>
-          </Link>
-        ))}
+        <div className="flex flex-col gap-5">
+          {TICKERS.map((t) => (
+            <Link 
+              key={t.id} 
+              href={`/detail/${t.id}`}
+              className={`flex flex-col items-center gap-1 group transition-all ${currentTicker === t.id ? 'opacity-100 scale-110' : 'opacity-30 hover:opacity-100 hover:scale-105'}`}
+            >
+              <div className={`w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center font-bold text-[13px] shadow-sm border-2 transition-all ${currentTicker === t.id ? 'bg-[var(--primary)] border-[var(--primary)] text-white shadow-blue-500/20' : 'bg-[var(--background)] border-[var(--border)]'}`}>
+                {t.id.slice(0, 2)}
+              </div>
+            </Link>
+          ))}
+        </div>
       </aside>
 
       {/* --- Main Content --- */}
-      <main className="flex-1 flex flex-col overflow-hidden">
+      <main className="flex-1 flex flex-col overflow-hidden bg-[var(--background)]">
         {/* Header */}
-        <header className="px-6 py-6 border-b border-[var(--border)] bg-[var(--surface)]">
-          <div className="flex items-end justify-between">
-            <div className="flex items-baseline gap-3">
-              <h1 className="text-3xl font-extrabold tracking-tighter">{currentTicker}</h1>
-              <button className="text-sm font-medium text-[var(--secondary)] underline decoration-[var(--border)] underline-offset-4 hover:text-[var(--primary)] transition-colors">
+        <header className="px-8 py-8 border-b border-[var(--border)] bg-[var(--surface)] shadow-sm">
+          <div className="flex items-end justify-between max-w-4xl mx-auto w-full">
+            <div className="flex items-baseline gap-4">
+              <h1 className="text-4xl font-black tracking-tighter">{currentTicker}</h1>
+              <button className="text-xs font-bold text-[var(--secondary)] underline decoration-[var(--border)] underline-offset-8 hover:text-[var(--primary)] hover:decoration-[var(--primary)] transition-all">
                 기업상세
               </button>
             </div>
-            <div className="flex items-center gap-2 text-[var(--primary)] font-bold">
-                <TrendingUp size={20} />
-                <span className="text-xl">243,500</span>
-                <span className="text-sm">+1.04%</span>
+            <div className="flex flex-col items-end">
+                <div className="flex items-center gap-2 text-[var(--danger)] font-black">
+                    <TrendingUp size={24} strokeWidth={3} />
+                    <span className="text-2xl tracking-tight">243,500</span>
+                </div>
+                <span className="text-sm font-bold text-[var(--danger)] bg-[var(--danger)]/10 px-2 py-0.5 rounded-md mt-1">+1.04%</span>
             </div>
           </div>
 
-          <div className="flex gap-2 mt-8">
+          <div className="flex gap-2.5 mt-10 max-w-4xl mx-auto w-full">
             {['최신순', '중요도순', '관련 정보'].map((filter) => (
               <button
                 key={filter}
                 onClick={() => setSelectedFilter(filter)}
-                className={`px-5 py-2 rounded-full text-sm font-bold transition-all ${selectedFilter === filter ? 'bg-[var(--foreground)] text-[var(--background)]' : 'bg-[var(--background)] text-[var(--secondary)] hover:bg-[var(--border)]'}`}
+                className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all active:scale-95 ${selectedFilter === filter ? 'bg-[var(--foreground)] text-[var(--background)] shadow-md' : 'bg-[var(--background)] text-[var(--secondary)] border border-[var(--border)] hover:bg-[var(--border)]'}`}
               >
                 {filter}
               </button>
@@ -131,66 +135,80 @@ export default function DetailPage() {
         </header>
 
         {/* News Feed */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-6">
-          {newsList.map((news) => (
-            <div key={news.id} className="surface p-6 animate-fade-in">
-              <div className="flex justify-between items-start mb-4">
-                <span className="text-xs font-bold text-[var(--primary)] bg-[var(--primary)]/10 px-2 py-1 rounded-md">
-                    {'⚡'.repeat(news.importance)}
-                </span>
-                <span className="text-xs text-[var(--secondary)] font-medium">{news.time}</span>
+        <div className="flex-1 overflow-y-auto p-8 space-y-8">
+          <div className="max-w-4xl mx-auto space-y-8">
+            {newsList.map((news) => (
+              <div key={news.id} className="surface p-8 animate-slide-up hover:shadow-lg transition-all border-none">
+                <div className="flex justify-between items-start mb-6">
+                  <div className="flex gap-1 bg-[var(--warning)]/10 px-3 py-1.5 rounded-full">
+                      {[...Array(news.importance)].map((_, i) => (
+                          <span key={i} className="text-[var(--warning)] text-xs tracking-tighter leading-none">⚡</span>
+                      ))}
+                  </div>
+                  <span className="text-xs text-[var(--secondary)] font-bold uppercase tracking-widest">{news.time}</span>
+                </div>
+                
+                <h2 className="text-2xl font-black mb-6 leading-[1.3] text-[var(--foreground)]">{news.title}</h2>
+                
+                <div className="space-y-6">
+                  <div className="bg-[var(--primary-dim)] p-5 rounded-2xl border-l-[6px] border-[var(--primary)]">
+                      <p className="text-[15px] font-bold text-[var(--foreground)] leading-relaxed">
+                          <span className="text-[var(--primary)] mr-2 font-black">요약</span>
+                          {news.conclusion}
+                      </p>
+                  </div>
+
+                  <div className="space-y-3 px-1">
+                      {news.summary.map((point, i) => (
+                          <div key={i} className="flex gap-3">
+                              <div className="w-1.5 h-1.5 rounded-full bg-[var(--border)] mt-2.5 shrink-0" />
+                              <p className="text-[15px] text-[var(--foreground-dim)] font-medium leading-relaxed">
+                                  {point}
+                              </p>
+                          </div>
+                      ))}
+                  </div>
+
+                  <div className="pt-8 border-t border-[var(--border)] mt-8">
+                      <div className="flex items-center gap-2 mb-4">
+                        <div className="w-2 h-5 bg-[var(--primary)] rounded-full" />
+                        <h4 className="text-sm font-black text-[var(--primary)] uppercase tracking-wider">
+                            {news.impactTitle}
+                        </h4>
+                      </div>
+                      <ul className="space-y-3">
+                          {news.impacts.map((impact, i) => (
+                              <li key={i} className="text-sm text-[var(--secondary)] leading-relaxed flex gap-3 italic font-medium">
+                                  <span className="text-[var(--border)]">—</span>
+                                  {impact}
+                              </li>
+                          ))}
+                      </ul>
+                  </div>
+
+                  <div className="pt-6 border-t border-[var(--border)] flex justify-end">
+                    <Link 
+                        href={news.url} 
+                        target="_blank"
+                        className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-[var(--background)] text-sm font-bold text-[var(--primary)] hover:bg-[var(--primary-dim)] transition-all group border border-[var(--border)]"
+                    >
+                        <ExternalLink size={16} strokeWidth={2.5} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                        원문 기사 전문 보기
+                    </Link>
+                  </div>
+                </div>
               </div>
-              
-              <h2 className="text-xl font-bold mb-4 leading-tight">{news.title}</h2>
-              
-              <div className="space-y-4">
-                <div className="bg-[var(--background)] p-4 rounded-xl border-l-4 border-[var(--primary)]">
-                    <p className="text-sm font-bold text-[var(--foreground)] leading-relaxed">
-                        <span className="text-[var(--primary)] mr-2">[결론]</span>
-                        {news.conclusion}
-                    </p>
-                </div>
+            ))}
 
-                <div className="space-y-1.5 px-1">
-                    {news.summary.map((point, i) => (
-                        <p key={i} className="text-sm text-[var(--foreground)] leading-relaxed flex gap-2">
-                            <span className="text-[var(--secondary)]">•</span>
-                            {point}
-                        </p>
-                    ))}
-                </div>
-
-                <div className="pt-4 border-t border-[var(--border)] mt-4">
-                    <h4 className="text-sm font-bold mb-3 flex items-center gap-2 text-[var(--primary)]">
-                        {news.impactTitle}
-                    </h4>
-                    <ul className="space-y-2 px-1">
-                        {news.impacts.map((impact, i) => (
-                            <li key={i} className="text-[13px] text-[var(--secondary)] leading-relaxed flex gap-2 italic">
-                                <span>-</span>
-                                {impact}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-
-                <Link 
-                    href={news.url} 
-                    target="_blank"
-                    className="inline-flex items-center gap-2 text-[13px] font-bold text-[var(--primary)] hover:underline mt-2"
-                >
-                    <ExternalLink size={14} />
-                    관련 기사 원문 보기
-                </Link>
+            {newsList.length === 0 && (
+              <div className="flex flex-col items-center justify-center py-32 text-[var(--secondary)] space-y-4">
+                  <div className="w-16 h-16 rounded-full bg-[var(--border)] flex items-center justify-center opacity-50">
+                      <Info size={32} />
+                  </div>
+                  <p className="text-sm font-bold tracking-tight uppercase">현재 표시할 뉴스가 없습니다.</p>
               </div>
-            </div>
-          ))}
-
-          {newsList.length === 0 && (
-            <div className="flex flex-col items-center justify-center h-full text-[var(--secondary)]">
-                <p className="text-sm font-medium">현재 표시할 뉴스가 없습니다.</p>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </main>
     </div>
